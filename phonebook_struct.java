@@ -102,3 +102,25 @@ class Printer {
         myPhoneBook.add(name2, phone1);
         myPhoneBook.add(name2, phone2);
         
+        System.out.println();
+
+        Map<Integer, PhoneRow> pb = PhoneBook.getPhoneBook();
+        LinkedHashMap<Integer, PhoneRow> lhm = pb.entrySet().stream().sorted(
+            (e1, e2) -> Integer.compare(
+                e2.getValue().getPhoneNumberCounter(), 
+                e1.getValue().getPhoneNumberCounter()
+            )
+        ).collect(
+            Collectors.toMap(
+                Map.Entry::getKey, 
+                Map.Entry::getValue, 
+                (e1, e2) -> e1, 
+                LinkedHashMap::new
+            )
+        );
+        
+        for (var item : lhm.entrySet()) {
+            System.out.println(item.toString());
+        }
+    }
+}
